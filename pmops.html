@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The Architect — real project management case studies, told through the fictional lens of Glimmerwork Collective.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233d1f5c'/%3E%3Cpolygon points='50,20 58,65 50,60 42,65' fill='%23c9a84c'/%3E%3C/svg%3E">
+<title>The Architect — Glimmerwork Collective</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --plum: #3d1f5c;
+  --plum-light: #5a2d82;
+  --plum-pale: #ede4f7;
+  --gold: #c9a84c;
+  --gold-light: #e8c96d;
+  --gold-pale: #fdf8ee;
+  --cream: #faf7f4;
+  --text: #2a1a3e;
+  --text-muted: #7a6890;
+  --white: #ffffff;
+  --green: #4a9e66;
+  --green-pale: #edf7f1;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.2rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(250,247,244,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--plum);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--plum); }
+.nav-links a.active { color: var(--plum); font-weight: 600; }
+.nav-icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+.nav-toggle { display: none; }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; flex-wrap: wrap; }
+  .nav-links { gap: 1.1rem; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 0.8rem; }
+}
+
+/* ── HERO SHARED ── */
+.page-hero {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 9rem 4rem 4rem;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(90,45,130,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 70%, rgba(201,168,76,0.08) 0%, transparent 55%),
+    var(--cream);
+}
+.hero-ornament {
+  position: absolute;
+  top: 10%; right: 6%;
+  width: 280px; height: 280px;
+  opacity: 0.07;
+}
+.hero-content {
+  position: relative;
+  max-width: 780px;
+  animation: fadeUp 1s ease both;
+  text-align: center;
+}
+.hero-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--plum);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+h1 em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background: var(--plum);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--plum-light); transform: translateY(-2px); }
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  margin-left: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.btn-secondary:hover { background: var(--gold); color: var(--white); }
+
+/* ── SECTION SHARED ── */
+section { padding: 6rem 4rem; }
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.6vw, 2.7rem);
+  font-weight: 300;
+  color: var(--plum);
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+}
+.divider {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom: 2rem;
+}
+p { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--text); }
+
+/* ── DISCLAIMER STRIP ── */
+.disclaimer-strip {
+  margin: 2rem auto 0;
+  background: rgba(61,31,92,0.06);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 100px;
+  padding: 0.55rem 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  max-width: 90%;
+  text-align: center;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #1e0a32;
+  padding: 1.8rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.4); }
+.footer-logo span { color: var(--gold); }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.25); letter-spacing: 0.06em; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeUpSafety 0.01s linear 1.2s forwards; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+@keyframes fadeUpSafety { to { opacity: 1; transform: translateY(0); } }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  section { padding: 4rem 1.5rem; }
+  .page-hero { padding: 8rem 1.5rem 3rem; }
+  footer { flex-direction: column; text-align: center; }
+}
+
+</style>
+<style>
+  #projects { background: var(--gold-pale); }
+  .projects-header { max-width: 1100px; margin: 0 auto 4rem; }
+  .projects-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .project-card {
+    background: var(--white); border-radius: 4px; padding: 2.5rem; border: 1px solid rgba(201,168,76,0.2);
+    transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .project-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--plum), var(--gold)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(61,31,92,0.1); }
+  .project-card:hover::after { transform: scaleX(1); }
+  .project-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--plum-light); background: var(--plum-pale); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1.2rem;
+  }
+  .project-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 500; color: var(--plum); margin-bottom: 0.4rem; line-height: 1.3; }
+  .project-subtitle { font-size: 0.8rem; font-weight: 400; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 1rem; text-transform: uppercase; }
+  .project-desc { font-size: 0.92rem; font-weight: 300; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .project-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-chip { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); border: 1px solid rgba(122,104,144,0.3); padding: 0.25rem 0.7rem; border-radius: 100px; }
+
+  .credentials-bar {
+    background: var(--plum); color: var(--white); border-radius: 6px; padding: 1.5rem 2rem;
+    text-align: center; margin: 3rem auto 0; max-width: 1100px; font-size: 0.85rem; letter-spacing: 0.04em;
+  }
+  .credentials-bar strong { color: var(--gold-light); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(30,10,50,0.75); backdrop-filter: blur(6px); z-index: 200;
+    display: none; align-items: center; justify-content: center; padding: 2rem;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 6px; max-width: 760px; width: 100%; max-height: 88vh; overflow-y: auto;
+    padding: 3rem; position: relative; animation: fadeUp 0.3s ease both;
+  }
+  .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; line-height: 1; }
+  .modal-tag { margin-bottom: 1rem; }
+  .modal h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: var(--plum); margin-bottom: 0.3rem; }
+  .modal-subtitle { font-size: 0.82rem; color: var(--gold); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .modal-divider { width: 100%; height: 1px; background: rgba(201,168,76,0.2); margin-bottom: 1.5rem; }
+  .modal-section-title { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; margin-top: 1.5rem; }
+  .modal p { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: var(--text); margin-bottom: 0.8rem; }
+  .modal ul { padding-left: 1.2rem; margin-bottom: 0.8rem; }
+  .modal ul li { font-size: 0.92rem; font-weight: 300; line-height: 1.8; color: var(--text-muted); margin-bottom: 0.3rem; }
+
+  /* INLINE DOCS (accordion within modal) */
+  .doc-accordion { margin-top: 0.6rem; border: 1px solid rgba(201,168,76,0.25); border-radius: 4px; overflow: hidden; }
+  .doc-accordion-header {
+    background: var(--plum-pale); padding: 0.9rem 1.3rem; display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; font-size: 0.85rem; font-weight: 500; color: var(--plum); user-select: none;
+  }
+  .doc-accordion-header .toggle-arrow { transition: transform 0.3s; color: var(--gold); }
+  .doc-accordion.open .toggle-arrow { transform: rotate(180deg); }
+  .doc-accordion-body { display: none; padding: 1.4rem 1.5rem; background: var(--cream); }
+  .doc-accordion.open .doc-accordion-body { display: block; }
+  .doc-section-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 1rem 0 0.5rem; }
+  .doc-section-title:first-child { margin-top: 0; }
+  .doc-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.5rem 0; }
+  .doc-table th { background: var(--plum); color: var(--white); padding: 0.5rem 0.7rem; text-align: left; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .doc-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid rgba(201,168,76,0.2); font-size: 0.82rem; color: var(--text); }
+  .doc-table tr:last-child td { border-bottom: none; }
+  .doc-mini-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .doc-mini-list li { font-size: 0.85rem; color: var(--text); padding-left: 1rem; position: relative; }
+  .doc-mini-list li::before { content: '◆'; font-size: 0.4rem; color: var(--gold); position: absolute; left: 0; top: 0.4rem; }
+  .doc-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 100px; margin-right: 0.3rem; }
+  .doc-badge.met { background: var(--green-pale); color: var(--green); }
+  .doc-badge.partial { background: #fdf3ee; color: #c9844c; }
+  .doc-badge.realized { background: #fdeeed; color: #c9504a; }
+  .doc-badge.mitigated { background: var(--green-pale); color: var(--green); }
+
+  @media (max-width: 900px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .modal { padding: 2rem 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Glimmer<span>work</span> Collective</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="10" r="6"/><circle cx="15" cy="10" r="6" stroke-dasharray="2 2"/></svg>
+      About
+    </a></li>
+    <li><a href="clinician.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.5-9.5-9C1 8.5 2.5 5 6 5c2 0 3.5 1.2 4.2 2.3L12 9l1.8-1.7C14.5 6.2 16 5 18 5c3.5 0 5 3.5 3.5 7-2.5 4.5-9.5 9-9.5 9z"/></svg>
+      Clinician
+    </a></li>
+    <li><a href="mentor.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 4h6M10 4v2.5M14 4v2.5"/><rect x="7" y="7" width="10" height="11" rx="2"/><path d="M10 18v2M14 18v2"/></svg>
+      Clinical Trainer
+    </a></li>
+    <li><a href="pmops.html" class="active">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a7.97 7.97 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a8 8 0 0 0-1.7-1L15 3h-4l-.3 2.9a8 8 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.97 7.97 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a8 8 0 0 0 1.7 1L11 21h4l.3-2.9a8 8 0 0 0 1.7-1l2.5 1 2-3.5z"/></svg>
+      Project Management
+    </a></li>
+    <li><a href="contact.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6l9 7 9-7"/><rect x="3" y="5" width="18" height="14" rx="1.5"/></svg>
+      Contact
+    </a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-ornament" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="6" fill="currentColor" style="color:var(--gold)"/>
+    <circle cx="100" cy="100" r="40" stroke="currentColor" stroke-width="1.5" style="color:var(--plum)" fill="none"/>
+    <path d="M100 30v15M100 155v15M30 100h15M155 100h15M53 53l11 11M147 53l-11 11M53 147l11-11M147 147l-11-11" stroke="currentColor" stroke-width="2" style="color:var(--gold)"/>
+  </svg>
+  <div class="hero-content fade-in">
+    <div class="hero-eyebrow">Systems That Hold</div>
+    <h1>The <em>Architect</em></h1>
+    <p class="hero-sub">The systems, pilots, and projects I've built to support the Unicorns who do the healing work.</p>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header fade-in">
+    <div class="section-label">The Initiatives</div>
+    <h2>Project Case Studies</h2>
+    <div class="divider"></div>
+    <p style="font-size:0.95rem; font-weight:300; color:var(--text-muted); max-width:580px; line-height:1.8;">
+      The projects below span provider onboarding, system transitions, quality improvement, and pilot design — each representing a different type of initiative within a national outpatient behavioral health network. Click any card to read the full case study, including condensed previews of the original project documents.
+    </p>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-card fade-in" onclick="openModal('modal1')">
+      <div class="project-tag">Learning Grove</div>
+      <div class="project-title">The Path of First Light</div>
+      <div class="project-subtitle">Provider Onboarding Process Redesign</div>
+      <p class="project-desc">New Unicorns were entering the Collective overwhelmed. Survey data pointed to a process that was clunky and hard to navigate. This initiative redesigned onboarding from the ground up.</p>
+      <div class="project-skills">
+        <span class="skill-chip">Project Leadership</span>
+        <span class="skill-chip">LMS Development</span>
+        <span class="skill-chip">Vendor Management</span>
+        <span class="skill-chip">Process Design</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in" onclick="openModal('modal2')">
+      <div class="project-tag">Innovation Stable</div>
+      <div class="project-title">The New Ledger Initiative</div>
+      <div class="project-subtitle">EHR Rollout — Provider Support Workstream</div>
+      <p class="project-desc">When the Collective migrated to a new record-keeping system, Unicorns needed support to make the transition without disrupting their care work. This initiative owned the provider-facing rollout.</p>
+      <div class="project-skills">
+        <span class="skill-chip">Change Management</span>
+        <span class="skill-chip">Training Design</span>
+        <span class="skill-chip">Escalation Workflows</span>
+        <span class="skill-chip">Stakeholder Coordination</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in" onclick="openModal('modal3')">
+      <div class="project-tag">Clarity Pool</div>
+      <div class="project-title">The Glimmer Academy</div>
+      <div class="project-subtitle">Provider Success Academy Pilot</div>
+      <p class="project-desc">A structured pilot program designed to help Unicorns improve documentation quality, encounter completion, and measurement-based care, with real support built into every step.</p>
+      <div class="project-skills">
+        <span class="skill-chip">Pilot Design</span>
+        <span class="skill-chip">Workflow Automation</span>
+        <span class="skill-chip">Performance Metrics</span>
+        <span class="skill-chip">Provider Coaching</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in" onclick="openModal('modal4')">
+      <div class="project-tag">Guidance Meadow</div>
+      <div class="project-title">The Lending of Light</div>
+      <div class="project-subtitle">Consult Line Coverage Pilot</div>
+      <p class="project-desc">A creative solution to two problems at once: employed Unicorns had unused hours, and the consult line was overwhelmed. This pilot built a new coverage model, and evaluated it honestly.</p>
+      <div class="project-skills">
+        <span class="skill-chip">Pilot Design</span>
+        <span class="skill-chip">Scheduling Systems</span>
+        <span class="skill-chip">Training Development</span>
+        <span class="skill-chip">Formal Evaluation</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="credentials-bar">
+    <strong>PMP #4422938</strong> · Project Management Institute
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Glimmer<span>work</span> Collective</div>
+  <div class="footer-copy">A fictional portfolio · Real professional work</div>
+</footer>
+
+<!-- MODAL 1: PATH OF FIRST LIGHT -->
+<div class="modal-overlay" id="modal1">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal1')">×</button>
+    <div class="modal-tag"><span class="project-tag">Learning Grove</span></div>
+    <h3>The Path of First Light</h3>
+    <div class="modal-subtitle">Provider Onboarding Process Redesign</div>
+    <div class="modal-divider"></div>
+
+    <div class="modal-section-title">Purpose</div>
+    <p>This initiative was created to redesign the Collective's onboarding process after repeated survey feedback described it as difficult to navigate and overwhelming for new Unicorns. Providers reported struggling to retain the volume of information required to begin delivering services confidently. The goal was to simplify onboarding, improve how information was delivered, and lay the groundwork for future efforts to cohort Unicorns for more targeted support.</p>
+
+    <div class="modal-section-title">The Challenge</div>
+    <p>New Unicorns arrived eager and ready, but the trail into the Collective was tangled. Tasks were scattered, timing was off, and by the time they reached their first clients, many felt underprepared. The process had grown organically over time, and no one had stepped back to ask whether it actually worked.</p>
+
+    <div class="modal-section-title">My Role</div>
+    <p>I co-led this project, sharing planning and execution responsibilities with a partner from Operations. I was specifically responsible for reviewing survey data, mapping existing workflows, coordinating with the external onboarding software vendor, and leading the redesign of LMS courses and onboarding surveys.</p>
+
+    <div class="modal-section-title">What We Built</div>
+    <ul>
+      <li>Redesigned onboarding workflows within the existing onboarding software</li>
+      <li>Monthly vendor meetings to implement configuration changes and address system limitations</li>
+      <li>New and updated LMS courses breaking content into digestible, stage-appropriate modules</li>
+      <li>Redesigned onboarding surveys to better capture readiness and identify gaps</li>
+      <li>Streamlined communications and task sequencing for new Unicorns</li>
+    </ul>
+
+    <div class="modal-section-title">Outcome</div>
+    <p>The redesigned path reduced early friction for new Unicorns and improved knowledge retention. The simplified process also served as a necessary foundation for a subsequent cohorting initiative. Feedback from newly onboarded Unicorns showed improved clarity around expectations from day one.</p>
+
+    <div class="modal-section-title">Skills Demonstrated</div>
+    <p>Co-project leadership · Process design · Vendor management · LMS development · Survey design · Cross-functional collaboration · Change management</p>
+
+    <div class="modal-section-title">Project Documents</div>
+
+    <!-- Doc Accordion: Project Charter -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📋 Project Charter</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Purpose &amp; Background</div>
+        <p style="font-size:0.88rem;">Onboarding survey data and direct provider feedback consistently described the existing onboarding process as difficult to navigate and overly complex. This project was also designed as a deliberate precursor to a future initiative grouping providers into structured cohorts.</p>
+
+        <div class="doc-section-title">Objectives</div>
+        <ul class="doc-mini-list">
+          <li>Simplify the onboarding experience to address survey feedback</li>
+          <li>Improve information retention through restructured content delivery</li>
+          <li>Streamline workflows in partnership with Operations</li>
+          <li>Create a scalable foundation for future provider cohorting</li>
+        </ul>
+
+        <div class="doc-section-title">Scope</div>
+        <table class="doc-table">
+          <tr><th>In Scope</th><th>Out of Scope</th></tr>
+          <tr><td>Survey review &amp; workflow redesign</td><td>New LMS platform implementation</td></tr>
+          <tr><td>Vendor coordination (monthly)</td><td>Launch of future cohorting initiative</td></tr>
+          <tr><td>LMS course creation/updates</td><td>Compensation or staffing changes</td></tr>
+          <tr><td>Survey redesign &amp; handoff docs</td><td>Credentialing process redesign</td></tr>
+        </table>
+
+        <div class="doc-section-title">Timeline</div>
+        <table class="doc-table">
+          <tr><th>Phase</th><th>Timing</th></tr>
+          <tr><td>Discovery &amp; Assessment</td><td>Month 1</td></tr>
+          <tr><td>Design &amp; Planning</td><td>Months 1–2</td></tr>
+          <tr><td>Build &amp; Configuration</td><td>Months 2–4</td></tr>
+          <tr><td>Launch &amp; Monitoring</td><td>Months 4–5</td></tr>
+          <tr><td>Handoff &amp; Close</td><td>Month 6</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: WBS -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>🗂️ Work Breakdown Structure</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <p style="font-size:0.88rem;">24 tasks across 5 phases. Ownership color key: <strong>Lead</strong> = me, <strong>Shared</strong> = co-owned with Ops, <strong>Vendor</strong> = external coordination.</p>
+
+        <div class="doc-section-title">Phase 1 — Discovery &amp; Assessment</div>
+        <ul class="doc-mini-list">
+          <li><strong>Review survey data</strong> (Lead) → Survey Analysis Summary</li>
+          <li><strong>Stakeholder interviews</strong> (Shared) → Feedback Notes</li>
+          <li><strong>Map current workflow</strong> (Shared) → Current-State Map</li>
+          <li><strong>Identify redesign priorities</strong> (Lead) → Priority List</li>
+        </ul>
+
+        <div class="doc-section-title">Phase 2 — Design &amp; Planning</div>
+        <ul class="doc-mini-list">
+          <li><strong>Design new workflow structure</strong> (Shared) → Future-State Design</li>
+          <li><strong>Define milestones &amp; expectations</strong> (Lead) → Milestone Map</li>
+          <li><strong>Plan LMS course structure</strong> (Lead) → Course Outline</li>
+          <li><strong>Redesign survey instruments</strong> (Lead) → Survey Drafts</li>
+          <li><strong>Plan vendor configuration changes</strong> (Shared) → Change Request List</li>
+        </ul>
+
+        <div class="doc-section-title">Phase 3 — Build &amp; Configuration</div>
+        <ul class="doc-mini-list">
+          <li><strong>Rebuild workflows in system</strong> (Shared) → Updated Workflows</li>
+          <li><strong>Monthly vendor meetings ×3</strong> (Vendor) → Meeting Notes</li>
+          <li><strong>Create LMS courses</strong> (Lead) → Published Courses</li>
+          <li><strong>Develop reference materials</strong> (Lead) → Provider Reference Library</li>
+          <li><strong>Deploy redesigned surveys</strong> (Lead) → Active Survey Instruments</li>
+          <li><strong>Internal QC review</strong> (Shared) → Sign-Off Document</li>
+        </ul>
+
+        <div class="doc-section-title">Phase 4 — Launch &amp; Monitoring</div>
+        <ul class="doc-mini-list">
+          <li><strong>Launch redesigned onboarding</strong> (Shared) → Launch Confirmation</li>
+          <li><strong>Monitor early feedback</strong> (Lead) → Feedback Summary</li>
+          <li><strong>Adjust workflows/content</strong> (Lead) → Iteration Log</li>
+          <li><strong>Continue vendor meetings</strong> (Vendor) → Meeting Notes</li>
+        </ul>
+
+        <div class="doc-section-title">Phase 5 — Handoff &amp; Close</div>
+        <ul class="doc-mini-list">
+          <li><strong>Document final process</strong> (Lead) → Process Documentation</li>
+          <li><strong>Document lessons learned</strong> (Shared) → Lessons Learned Summary</li>
+          <li><strong>Scalability recommendations</strong> (Lead) → Recommendation Doc</li>
+          <li><strong>Formal handoff to Operations</strong> (Shared) → Handoff Sign-Off</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Vendor Communication Log -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📞 Vendor Communication Log</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <p style="font-size:0.88rem;">Monthly check-ins with the onboarding software vendor, covering platform status, troubleshooting, and upcoming features relevant to onboarding.</p>
+
+        <div class="doc-section-title">Recurring Discussion Topics</div>
+        <ul class="doc-mini-list">
+          <li><strong>Platform check-ins</strong> — reviewing how the system was performing for current onboarding cohorts</li>
+          <li><strong>Troubleshooting</strong> — resolving any issues providers or admins ran into within the platform</li>
+          <li><strong>New feature updates</strong> — learning about platform updates that could simplify or improve the onboarding experience</li>
+          <li><strong>Data &amp; reporting</strong> — discussing how to collect and pull completion and engagement data from the system</li>
+        </ul>
+
+        <div class="doc-section-title">Why This Mattered</div>
+        <p style="font-size:0.88rem;">A regular vendor cadence meant new platform capabilities could be evaluated and adopted as they became available, rather than discovered after the fact, and kept data reporting needs visible and addressed proactively.</p>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Handoff & Lessons Learned -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>✅ Handoff &amp; Lessons Learned</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Closure Type</div>
+        <p style="font-size:0.9rem;"><span class="doc-badge mitigated">Transitioned to Standard Operations</span> No formal evaluation was required; the project concluded with handoff once workflows stabilized.</p>
+
+        <div class="doc-section-title">What Worked</div>
+        <ul class="doc-mini-list">
+          <li>Co-leadership model with Operations kept scope realistic and execution grounded</li>
+          <li>Monthly vendor cadence prevented configuration issues from piling up</li>
+          <li>Breaking LMS content into stage-appropriate modules visibly improved retention feedback</li>
+        </ul>
+
+        <div class="doc-section-title">Lessons Learned</div>
+        <ul class="doc-mini-list">
+          <li>Survey data should be reviewed earlier in future redesigns, several friction points were predictable in hindsight</li>
+          <li>Vendor configuration limitations should be scoped before finalizing the future-state workflow design, not after</li>
+          <li>This project's simplification work became a necessary precursor to the subsequent cohorting initiative, worth sequencing intentionally next time</li>
+        </ul>
+
+        <div class="doc-section-title">Handoff Confirmation</div>
+        <p style="font-size:0.88rem;">Final deliverables transitioned to Operations: revised onboarding workflow, simplified system configurations, LMS courses, redesigned surveys, and documented scalability recommendations.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL 2: NEW LEDGER INITIATIVE -->
+<div class="modal-overlay" id="modal2">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal2')">×</button>
+    <div class="modal-tag"><span class="project-tag">Innovation Stable</span></div>
+    <h3>The New Ledger Initiative</h3>
+    <div class="modal-subtitle">EHR Rollout — Provider Support Workstream</div>
+    <div class="modal-divider"></div>
+
+    <div class="modal-section-title">Purpose</div>
+    <p>When the Collective transitioned to a new record-keeping system, the goal was to ensure Unicorns could make the shift without disruption to their care work. The broader implementation was led separately; this initiative owned everything on the provider-facing side: readiness, training, communications, and post-launch support.</p>
+
+    <div class="modal-section-title">The Challenge</div>
+    <p>A new record system meant new workflows, new documentation expectations, and a learning curve during an already busy season of care. Without dedicated provider support, confusion would quietly compound, and care quality would be the thing that suffered.</p>
+
+    <div class="modal-section-title">My Role</div>
+    <p>I served as Project Coordinator for the provider support workstream, collaborating alongside the primary implementation lead. My responsibilities focused entirely on Unicorn-facing components of the rollout.</p>
+
+    <div class="modal-section-title">What We Built</div>
+    <ul>
+      <li>Provider training materials, workflow guides, and documentation tips</li>
+      <li>Communication plan covering pre-launch updates, go-live announcements, and expectation-setting</li>
+      <li>Issue triage and escalation workflows for the go-live period</li>
+      <li>Post-launch stabilization support and targeted follow-up for struggling providers</li>
+      <li>Recommendations for improving provider experience and adoption</li>
+    </ul>
+
+    <div class="modal-section-title">Outcome</div>
+    <p>Unicorns entered go-live with clear expectations and a defined support pathway. Common issues were triaged quickly and escalated appropriately. Provider support needs stabilized and were successfully transitioned into standard operations.</p>
+
+    <div class="modal-section-title">Skills Demonstrated</div>
+    <p>Project coordination · Training design · Provider communications · Escalation workflow design · Stakeholder collaboration · Change management · Post-launch support</p>
+
+    <div class="modal-section-title">Project Documents</div>
+
+    <!-- Doc Accordion: Project Charter -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📋 Project Charter</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Purpose &amp; Background</div>
+        <p style="font-size:0.88rem;">The Collective was migrating to a new record-keeping system. The overall implementation was led separately; this charter scoped the provider-facing workstream specifically, ensuring Unicorns could transition without disruption to active care work.</p>
+
+        <div class="doc-section-title">Objectives</div>
+        <ul class="doc-mini-list">
+          <li>Prepare Unicorns for the new system through training and clear communication</li>
+          <li>Maintain documentation quality and compliance through the transition</li>
+          <li>Provide reliable go-live support across a cohort-based rollout</li>
+          <li>Stabilize provider support needs and transition into standard operations</li>
+        </ul>
+
+        <div class="doc-section-title">Scope</div>
+        <table class="doc-table">
+          <tr><th>In Scope</th><th>Out of Scope</th></tr>
+          <tr><td>Provider training &amp; communications</td><td>System build &amp; configuration</td></tr>
+          <tr><td>Go-live support &amp; escalation design</td><td>Data migration</td></tr>
+          <tr><td>Post-launch stabilization</td><td>Vendor contract negotiation</td></tr>
+        </table>
+
+        <div class="doc-section-title">Stakeholders</div>
+        <ul class="doc-mini-list">
+          <li><strong>Implementation Lead</strong> — owns system build, configuration, and overall rollout</li>
+          <li><strong>Me (Provider Support Coordinator)</strong> — owns all Unicorn-facing readiness, training, and support</li>
+          <li><strong>Pilot Cohorts of Unicorns</strong> — phased rollout groups, each with its own go-live window</li>
+        </ul>
+
+        <div class="doc-section-title">Timeline</div>
+        <p style="font-size:0.88rem;">Rollout proceeded in cohorts rather than a single launch date, with each cohort receiving training materials 3+ weeks ahead of its go-live, followed by weekly office hours through stabilization.</p>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: RACI -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>🔗 RACI Chart</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <p style="font-size:0.88rem;">Roles: <strong>Impl. Lead</strong> = overall implementation lead · <strong>Me</strong> = provider support coordinator. R = Responsible, A = Accountable, C = Consulted, I = Informed.</p>
+
+        <div class="doc-section-title">Phase 1 — Planning</div>
+        <table class="doc-table">
+          <tr><th>Task</th><th>Impl. Lead</th><th>Me</th></tr>
+          <tr><td>Define overall scope &amp; timeline</td><td>A</td><td>I</td></tr>
+          <tr><td>Assess provider readiness</td><td>C</td><td>A/R</td></tr>
+          <tr><td>Identify training needs</td><td>I</td><td>A/R</td></tr>
+          <tr><td>Design escalation pathways</td><td>C</td><td>A/R</td></tr>
+        </table>
+
+        <div class="doc-section-title">Phase 2 — Execution</div>
+        <table class="doc-table">
+          <tr><th>Task</th><th>Impl. Lead</th><th>Me</th></tr>
+          <tr><td>Develop training materials</td><td>I</td><td>A/R</td></tr>
+          <tr><td>Provider communications</td><td>C</td><td>A/R</td></tr>
+          <tr><td>System build &amp; configuration</td><td>A/R</td><td>—</td></tr>
+          <tr><td>Manage go-live questions</td><td>I</td><td>A/R</td></tr>
+          <tr><td>Escalate system-level issues</td><td>A</td><td>R</td></tr>
+        </table>
+
+        <div class="doc-section-title">Phase 3 — Stabilization</div>
+        <table class="doc-table">
+          <tr><th>Task</th><th>Impl. Lead</th><th>Me</th></tr>
+          <tr><td>Monitor adoption trends</td><td>I</td><td>A/R</td></tr>
+          <tr><td>Coordinate follow-up support</td><td>I</td><td>A/R</td></tr>
+          <tr><td>Refine training materials</td><td>I</td><td>A/R</td></tr>
+          <tr><td>Transition to standard ops</td><td>A</td><td>R</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Training Plan + Go-Live -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📋 Training Plan + Go-Live Checklist</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Training Modules</div>
+        <ul class="doc-mini-list">
+          <li><strong>New System Orientation</strong> — asynchronous walkthrough, all providers</li>
+          <li><strong>Documentation Workflow Guide</strong> — quick-reference + workflow diagram</li>
+          <li><strong>Documentation Standards Refresher</strong> — tip sheet</li>
+          <li><strong>Live Go-Live Support</strong> — weekly office hours, ongoing throughout the cohort-based rollout (each cohort got its own go-live support window)</li>
+          <li><strong>Escalation Pathway Briefing</strong> — distributed with launch communication</li>
+        </ul>
+
+        <div class="doc-section-title">Go-Live Readiness Checklist (sample)</div>
+        <ul class="doc-mini-list">
+          <li>✓ Training modules finalized &amp; validated against final system build</li>
+          <li>✓ Materials distributed 3+ weeks before each cohort's go-live</li>
+          <li>✓ Go-live announcement scheduled 48 hrs before launch</li>
+          <li>✓ Issue triage &amp; escalation workflow tested before launch</li>
+          <li>✓ Office hours calendar live and accessible to all providers</li>
+          <li>✓ Final sign-off from implementation lead on system readiness</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Post-Launch Stabilization Summary -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>✅ Post-Launch Stabilization Summary</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Closure Type</div>
+        <p style="font-size:0.9rem;"><span class="doc-badge mitigated">Transitioned to Standard Operations</span> Provider support needs stabilized cohort by cohort, with ownership transferred to standard support channels once each group cleared its go-live window.</p>
+
+        <div class="doc-section-title">What Worked</div>
+        <ul class="doc-mini-list">
+          <li>Cohort-based rollout (rather than a single big-bang launch) kept go-live support manageable and focused</li>
+          <li>Weekly office hours throughout the rollout caught issues early, before they became wider patterns</li>
+          <li>Clear escalation pathway to the implementation lead kept system-level issues from getting stuck in provider support queues</li>
+        </ul>
+
+        <div class="doc-section-title">Lessons Learned</div>
+        <ul class="doc-mini-list">
+          <li>Validating training materials against the live system (not staging) before each cohort caught discrepancies that would have otherwise confused providers</li>
+          <li>A shared leadership model works well when responsibilities are clearly divided in writing, ambiguity was the main risk, not workload</li>
+          <li>Recurring question themes across cohorts should feed back into training updates faster than they did in this rollout</li>
+        </ul>
+
+        <div class="doc-section-title">Stabilization Confirmation</div>
+        <p style="font-size:0.88rem;">Final deliverables transitioned to standard operations: provider training and communication resources, escalation workflows, and documented recommendations for improving provider experience and adoption.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL 3: GLIMMER ACADEMY -->
+<div class="modal-overlay" id="modal3">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal3')">×</button>
+    <div class="modal-tag"><span class="project-tag">Clarity Pool</span></div>
+    <h3>The Glimmer Academy</h3>
+    <div class="modal-subtitle">Provider Success Academy — V1 Pilot</div>
+    <div class="modal-divider"></div>
+
+    <div class="modal-section-title">Purpose</div>
+    <p>This initiative was created to design and launch a pilot provider development program focused on improving documentation quality, encounter completion, and use of measurement-based care across the Collective's network of Unicorns. The pilot was built in response to variability in provider performance and the need for a more proactive, supportive approach before considering a broader rollout.</p>
+
+    <div class="modal-section-title">The Challenge</div>
+    <p>Inconsistencies in how Unicorns documented their work were quietly affecting care quality across the Collective. The gaps weren't about skill. They were about unclear expectations, limited feedback, and a lack of structure around growth. A one-size-fits-all approach wasn't going to work.</p>
+
+    <div class="modal-section-title">My Role</div>
+    <p>I served as the Clinical Consult Manager and project lead, responsible for directing the initiative from planning through pilot evaluation. I defined scope and success metrics, coordinated cross-functional stakeholders, designed provider workflows and communications, and oversaw execution of the pilot cohort.</p>
+
+    <div class="modal-section-title">What We Built</div>
+    <ul>
+      <li>Pilot program structure, timeline, and defined performance benchmarks</li>
+      <li>Automated provider communication workflows and engagement sequences</li>
+      <li>Support pathways linking performance data to documentation guidance, office hours, and consults</li>
+      <li>Provider feedback surveys and qualitative check-ins</li>
+      <li>Pilot evaluation framework and lessons-learned documentation</li>
+    </ul>
+
+    <div class="modal-section-title">Outcome</div>
+    <p>The 90-day pilot wrapped with a 95.4% graduation rate among eligible providers, with audit "Not Achieved" rates dropping roughly 15 points across both intake and progress notes. The full evaluation findings are below.</p>
+
+    <div class="modal-section-title">Skills Demonstrated</div>
+    <p>Project leadership · Pilot design · Workflow automation · Performance metrics · Provider coaching · Stakeholder alignment · Program evaluation</p>
+
+    <div class="modal-section-title">Project Documents</div>
+
+    <!-- Doc Accordion: Project Charter -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📋 Project Charter</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Purpose &amp; Background</div>
+        <p style="font-size:0.88rem;">Variability in Unicorn performance metrics signaled a need for a more structured, proactive support framework. This pilot tested a defined, supported intervention before committing to a broader rollout.</p>
+
+        <div class="doc-section-title">Objectives</div>
+        <ul class="doc-mini-list">
+          <li>Design and launch a structured provider development pilot</li>
+          <li>Improve documentation quality, encounter completion, and MBC adherence</li>
+          <li>Test automated communication and support workflows at scale</li>
+          <li>Deliver a formal evaluation with clear recommendations</li>
+        </ul>
+
+        <div class="doc-section-title">Scope</div>
+        <table class="doc-table">
+          <tr><th>In Scope</th><th>Out of Scope</th></tr>
+          <tr><td>Cohort identification &amp; benchmarks</td><td>Full organizational rollout</td></tr>
+          <tr><td>Automated communication workflows</td><td>Clinical supervision changes</td></tr>
+          <tr><td>Support pathways &amp; feedback surveys</td><td>EHR configuration changes</td></tr>
+        </table>
+
+        <div class="doc-section-title">Timeline</div>
+        <table class="doc-table">
+          <tr><th>Phase</th><th>Timing</th></tr>
+          <tr><td>Initiation &amp; Planning</td><td>Oct – Nov 2025</td></tr>
+          <tr><td>Design &amp; Build</td><td>Nov – Dec 2025</td></tr>
+          <tr><td>Pilot Launch (V1)</td><td>Jan 2026</td></tr>
+          <tr><td>Execution &amp; Monitoring</td><td>Jan – Mar 2026</td></tr>
+          <tr><td>Evaluation &amp; Close</td><td>Apr 2026</td></tr>
+        </table>
+
+        <div class="doc-section-title">Stakeholders</div>
+        <ul class="doc-mini-list">
+          <li><strong>Clinical Leadership</strong> — approves scope, benchmarks, evaluation criteria</li>
+          <li><strong>Operations</strong> — workflow automation &amp; data support</li>
+          <li><strong>Pilot Cohort Unicorns</strong> — program participants</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Communication Plan -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📧 Communication Plan</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Provider Communication Sequence</div>
+        <ul class="doc-mini-list">
+          <li>Email 1 — Welcome &amp; program launch (manual)</li>
+          <li>Email 2 — Month 1 performance update (automated)</li>
+          <li>Email 3 — Month 2 performance update (automated)</li>
+          <li>Email 4 — Mid-pilot feedback survey (manual)</li>
+          <li>Email 5 — Month 3 final performance update (automated)</li>
+          <li>Email 6 — End-of-pilot wrap-up survey (manual)</li>
+          <li>Email 7 — Graduation or extension decision (manual, individualized)</li>
+        </ul>
+
+        <div class="doc-section-title">Communication Principles</div>
+        <ul class="doc-mini-list">
+          <li>Supportive and non-punitive tone throughout, this is development, not discipline</li>
+          <li>Consistent structure and voice across all provider touchpoints</li>
+          <li>Providers below benchmark automatically routed to coaching, office hours, or 1:1 consults</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Performance Benchmarks & Audit Criteria -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>🎯 Performance Benchmarks &amp; Audit Criteria</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <p style="font-size:0.88rem;">Defined benchmarks used to identify which Unicorns received targeted support during the pilot, and the audit structure used to track progress.</p>
+
+        <div class="doc-section-title">Tracked Metrics</div>
+        <table class="doc-table">
+          <tr><th>Metric</th><th>Benchmark</th></tr>
+          <tr><td>Documentation audit score</td><td>"Achieved" on Intake &amp; Progress Notes</td></tr>
+          <tr><td>Encounter completion rate</td><td>75%+ within 72-hour window</td></tr>
+          <tr><td>MBC completion rate</td><td>75%+ within 24-hour session window</td></tr>
+        </table>
+
+        <div class="doc-section-title">Audit Structure</div>
+        <ul class="doc-mini-list">
+          <li>Two audits per note type: one early in the program, one near graduation</li>
+          <li>Audit findings categorized as Achieved, Needs Improvement, or Not Achieved</li>
+          <li>Providers scoring below benchmark on a follow-up audit routed to remediation support</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Evaluation Report -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📊 Pilot Evaluation Report</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Recommendation</div>
+        <p style="font-size:0.9rem;"><span class="doc-badge met">Modify &amp; Scale</span> The pilot demonstrated strong proof of concept.</p>
+
+        <div class="doc-section-title">Cohort Summary</div>
+        <table class="doc-table">
+          <tr><th>Metric</th><th>Result</th></tr>
+          <tr><td>Active cohort (Month 1)</td><td>123 Unicorns</td></tr>
+          <tr><td>Received at least one audit</td><td>95</td></tr>
+          <tr><td>Eligible for graduation</td><td>87</td></tr>
+          <tr><td>Graduated</td><td>83 (95.4%)</td></tr>
+        </table>
+
+        <div class="doc-section-title">Audit Quality — Intake Notes</div>
+        <table class="doc-table">
+          <tr><th>Score</th><th>Intake 1</th><th>Intake 2</th><th>Change</th></tr>
+          <tr><td>Achieved</td><td>60.3%</td><td>76.7%</td><td>+16.4 pts</td></tr>
+          <tr><td>Not Achieved</td><td>21.9%</td><td>6.8%</td><td>-15.1 pts</td></tr>
+        </table>
+
+        <div class="doc-section-title">KPI Highlights</div>
+        <ul class="doc-mini-list">
+          <li><span class="doc-badge met">Met</span> Reduction in "Not Achieved" rate (target 25%+, actual ~15 pts both note types)</li>
+          <li><span class="doc-badge met">Met</span> Day 60 &amp; Day 90 satisfaction scores (target ≥4.0, actual 4.07–4.13)</li>
+          <li><span class="doc-badge partial">Partial</span> Notes signed within 72 hours (target 75%+, dipped to 72.6% in Month 2)</li>
+          <li><span class="doc-badge partial">Partial</span> MBC completion rate (target 75%+, dropped to 60.0% in Month 3)</li>
+        </ul>
+
+        <div class="doc-section-title">What Needs Attention</div>
+        <ul class="doc-mini-list">
+          <li>Resource awareness was a gap — some providers didn't know support existed</li>
+          <li>MBC rates declined sharply in Month 3, linked to caseload growth and a cross-system workflow barrier</li>
+          <li>MBC Review and Treatment Plan sections remained the weakest audit categories throughout</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL 4: LENDING OF LIGHT -->
+<div class="modal-overlay" id="modal4">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal4')">×</button>
+    <div class="modal-tag"><span class="project-tag">Guidance Meadow</span></div>
+    <h3>The Lending of Light</h3>
+    <div class="modal-subtitle">Consult Line Coverage Pilot</div>
+    <div class="modal-divider"></div>
+
+    <div class="modal-section-title">Purpose</div>
+    <p>This initiative piloted a new model for staffing the Collective's consult line by using employed Unicorns during their unfilled hours to support contracted Unicorns with clinical questions. The pilot addressed two problems simultaneously: underutilized employed provider time and an overwhelmed consult line managed by a single clinical manager.</p>
+
+    <div class="modal-section-title">The Challenge</div>
+    <p>Employed Unicorns were being paid for hours that often went unused. Meanwhile, the consult line, the lifeline for over 1,000 contracted Unicorns with clinical questions, was running on one person. Employed Unicorns had also been asking for more variety in their work beyond direct client care.</p>
+
+    <div class="modal-section-title">My Role</div>
+    <p>I served as the Project Lead in my role as Consult Manager. I was responsible for designing the pilot model, building training and procedures, coordinating stakeholders, managing execution, and conducting the formal evaluation at the end of the year.</p>
+
+    <div class="modal-section-title">What We Built</div>
+    <ul>
+      <li>Training curriculum for employed Unicorns taking on consult coverage</li>
+      <li>Scheduling workflows to align coverage with provider availability</li>
+      <li>Procedures for staffing the consult line, including escalation pathways</li>
+      <li>Partnership with the client experience team to train providers on support software</li>
+      <li>Evaluation framework tracking question volume, resolution rates, and scheduling consistency</li>
+    </ul>
+
+    <div class="modal-section-title">Outcome</div>
+    <p>The pilot ran from March through December 2023 and concluded with a formal evaluation. While it demonstrated some benefit, including added variety for employed Unicorns, the model was ultimately discontinued due to scheduling inconsistencies and a lower-than-anticipated volume of resolved questions. The evaluation and lessons learned were documented and informed future consult line planning.</p>
+
+    <div class="modal-section-title">Skills Demonstrated</div>
+    <p>Project leadership · Pilot design · Training development · Scheduling systems · Stakeholder coordination · Formal evaluation · Lessons-learned documentation</p>
+
+    <div class="modal-section-title">Project Documents</div>
+
+    <!-- Doc Accordion: Project Charter -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📋 Project Charter</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Purpose &amp; Background</div>
+        <p style="font-size:0.88rem;">Employed Unicorns were salaried but frequently had unused hours due to scheduling gaps and no-shows. Meanwhile, the consult line serving 1,000+ contracted Unicorns was staffed by a single clinical manager. This charter scoped a pilot to address both problems through a new coverage model.</p>
+
+        <div class="doc-section-title">Objectives</div>
+        <ul class="doc-mini-list">
+          <li>Pilot a coverage model using employed Unicorn capacity to support the consult line</li>
+          <li>Give employed Unicorns variety in their workday, a previously requested benefit</li>
+          <li>Reduce consult line strain on the primary clinical manager</li>
+          <li>Conduct a formal year-end evaluation to determine continuation, modification, or discontinuation</li>
+        </ul>
+
+        <div class="doc-section-title">Scope</div>
+        <table class="doc-table">
+          <tr><th>In Scope</th><th>Out of Scope</th></tr>
+          <tr><td>Training curriculum &amp; escalation design</td><td>Permanent staffing changes</td></tr>
+          <tr><td>Flexible scheduling model</td><td>Compensation restructuring</td></tr>
+          <tr><td>Formal pilot evaluation</td><td>Consult line software replacement</td></tr>
+        </table>
+
+        <div class="doc-section-title">Stakeholders</div>
+        <ul class="doc-mini-list">
+          <li><strong>Clinical Leadership</strong> — approved pilot scope and evaluation criteria</li>
+          <li><strong>Employed Unicorns</strong> — pilot participants providing consult coverage</li>
+          <li><strong>Contracted Unicorns</strong> — recipients of consult support (1,000+ network)</li>
+          <li><strong>Client Experience Team</strong> — partnered on support software training</li>
+        </ul>
+
+        <div class="doc-section-title">Timeline</div>
+        <table class="doc-table">
+          <tr><th>Phase</th><th>Timing</th></tr>
+          <tr><td>Planning &amp; Design</td><td>Jan – Feb 2023</td></tr>
+          <tr><td>Pilot Launch &amp; Execution</td><td>Mar – Dec 2023</td></tr>
+          <tr><td>Formal Evaluation</td><td>Dec 2023</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Risk Register -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>⚠️ Risk Register</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <ul class="doc-mini-list">
+          <li><span class="doc-badge realized">Realized</span> <strong>Scheduling inconsistency</strong> — employed provider availability proved too unpredictable for reliable coverage</li>
+          <li><span class="doc-badge realized">Realized</span> <strong>Low resolution volume</strong> — scope limitations meant many questions still required escalation</li>
+          <li><span class="doc-badge mitigated">Mitigated</span> <strong>Clinical quality inconsistency</strong> — training and escalation protocols prevented quality incidents</li>
+          <li><span class="doc-badge mitigated">Mitigated</span> <strong>Low provider motivation</strong> — employed Unicorns responded positively to the added variety</li>
+          <li><span class="doc-badge partial">Monitored</span> <strong>Contracted provider experience</strong> — no formal complaints, but resolution data still informed the decision to stop</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Training Curriculum -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📋 Training Curriculum Overview</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Modules</div>
+        <ul class="doc-mini-list">
+          <li><strong>Consult Line Purpose &amp; Expectations</strong> — live kickoff session</li>
+          <li><strong>Support Software Training</strong> — hands-on, partnered with Client Experience</li>
+          <li><strong>Common Question Types &amp; Scope Boundaries</strong> — written guide + live Q&amp;A</li>
+          <li><strong>Escalation Procedures</strong> — written procedure + flowchart</li>
+          <li><strong>Quality &amp; Tone Standards</strong> — example responses, consistency focus</li>
+        </ul>
+
+        <div class="doc-section-title">Escalation Flow</div>
+        <p style="font-size:0.85rem;">Contracted Unicorn submits question → Employed Unicorn checks scope guide → In-scope: respond directly → Out-of-scope: escalate to Project Lead, with contracted provider notified of timing.</p>
+
+        <div class="doc-section-title">Training Outcomes</div>
+        <ul class="doc-mini-list">
+          <li>No significant quality incidents during the pilot period</li>
+          <li>Escalation protocol followed consistently when questions exceeded scope</li>
+          <li>Employed Unicorns reported feeling prepared and supported</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Doc Accordion: Evaluation Report -->
+    <div class="doc-accordion">
+      <div class="doc-accordion-header" onclick="toggleDoc(this)">
+        <span>📊 Pilot Evaluation Report</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="doc-accordion-body">
+        <div class="doc-section-title">Decision</div>
+        <p style="font-size:0.9rem;"><span class="doc-badge realized">Discontinued</span> Right call, well made, based on evidence gathered throughout the pilot.</p>
+
+        <div class="doc-section-title">Why It Was Discontinued</div>
+        <p style="font-size:0.88rem;">Scheduling proved too inconsistent to create reliable coverage, and question resolution rates were lower than anticipated given scope limitations. Continuing would have meant maintaining a system generating more management overhead than relief.</p>
+
+        <div class="doc-section-title">Lessons Learned</div>
+        <ul class="doc-mini-list">
+          <li>Scheduling flexibility alone can't solve caseload variability</li>
+          <li>Resolution scope must be validated before staffing decisions are made</li>
+          <li>Participant experience and program outcomes are different metrics, both matter</li>
+          <li>Training and procedures built for a discontinued pilot are still reusable assets</li>
+          <li>A defined evaluation date makes the decision to stop easier and cleaner</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(overlay => {
+        overlay.classList.remove('active');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+
+  function toggleDoc(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
